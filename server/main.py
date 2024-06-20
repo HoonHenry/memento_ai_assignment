@@ -1,4 +1,4 @@
-import redis
+# import redis
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -6,16 +6,19 @@ from sqlalchemy.orm import Session
 from .database import engine, SessionLocal
 from .models import Base
 from .schemas import URLBase, URL
-from .services import create_short_url, get_original_url
+from .services import (
+    create_short_url, get_original_url, get_url_stats,
+    update_stat,
+)
 
 
 Base.metadata.create_all(bind=engine)
 
-r = redis.Redis(
-    host='redis',
-    port=6379,
-    decode_responses=True
-)
+# r = redis.Redis(
+#     host='redis',
+#     port=6379,
+#     decode_responses=True
+# )
 
 app = FastAPI()
 
@@ -52,7 +55,7 @@ def redirect_url(
     short_key: str,
     db: Session = Depends(get_db)
 ):
-    item = get_original_url(
+    item = update_stat(
         db=db,
         short_url=short_key,
     )
@@ -65,3 +68,23 @@ def redirect_url(
         url=item.url,
         status_code=status.HTTP_301_MOVED_PERMANENTLY
     )
+
+
+@app.get(
+    "/stats/{short_key}",
+    # response_model=URL,
+)
+def get_stats(
+    short_key: str,
+    db: Session = Depends(get_db)
+):
+    item = get_url_stats(
+        db=db,
+        short_url=short_key,
+    )
+    if item is None:
+        return HTTPException(
+            status_code=404,
+            detail="URL not found",
+        )
+    return {"stats": item.stats}

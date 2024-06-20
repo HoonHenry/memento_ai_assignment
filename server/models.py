@@ -2,6 +2,7 @@ import datetime as _dt
 from sqlalchemy import Column, Integer, String, DateTime
 
 from .database import Base
+from .utils import set_timedelta
 
 
 class URL(Base):
@@ -21,10 +22,13 @@ class URL(Base):
         index=True,
         unique=True,
     )
+    stats = Column(
+        Integer,
+        default=0,
+    )
     valid_by = Column(
         DateTime,
-        # default=_dt.datetime.now()+_dt.timedelta(hours=1),
-        default=_dt.datetime.now()+_dt.timedelta(seconds=30),
+        default=_dt.datetime.now()+set_timedelta(),
     )
     created_at = Column(
         DateTime,
