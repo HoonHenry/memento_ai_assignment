@@ -7,7 +7,7 @@ from .database import engine, SessionLocal
 from .models import Base
 from .schemas import URLBase, URL
 from .services import (
-    create_short_url, get_original_url, get_url_stats,
+    create_short_url, get_original_url,
     update_stat,
 )
 
@@ -78,7 +78,7 @@ def get_stats(
     short_key: str,
     db: Session = Depends(get_db)
 ):
-    item = get_url_stats(
+    item = get_original_url(
         db=db,
         short_url=short_key,
     )

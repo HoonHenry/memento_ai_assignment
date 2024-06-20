@@ -7,7 +7,8 @@ def convert_url() -> str:
     datacenter: int = 1
     worker: int = 1
     node: int = datacenter << 5 | worker
-    epoch: _dt.datetime = _dt.datetime.fromisoformat('2010-11-04T01:42:54.657Z')
+    epoch: _dt.datetime = _dt.datetime.fromisoformat(
+        '2010-11-04T01:42:54.657Z')
 
     twitter_generator: TSIDGenerator = TSIDGenerator(
         node=node,
@@ -21,9 +22,9 @@ def convert_url() -> str:
 
 
 def set_timedelta() -> _dt.datetime:
-    timedelta = int(os.environ.get('TIMEDELTA')) # seconds
+    timedelta = int(os.environ.get('TIMEDELTA'))  # seconds
     if timedelta == 30:
-        timedelta = _dt.timedelta(seconds=30) 
+        timedelta = _dt.timedelta(seconds=30)
     elif timedelta == 3600:
         timedelta = _dt.timedelta(hours=1)
     else:
