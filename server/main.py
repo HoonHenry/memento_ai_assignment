@@ -1,4 +1,6 @@
-# import redis
+import logging
+import os
+# import aioredis
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -12,13 +14,14 @@ from .services import (
 )
 
 
+log = logging.getLogger(__name__)
 Base.metadata.create_all(bind=engine)
 
-# r = redis.Redis(
-#     host='redis',
-#     port=6379,
+# rd = aioredis.from_url(
+#     f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
 #     decode_responses=True
 # )
+# log.info(rd)
 
 app = FastAPI()
 
@@ -72,7 +75,6 @@ def redirect_url(
 
 @app.get(
     "/stats/{short_key}",
-    # response_model=URL,
 )
 def get_stats(
     short_key: str,

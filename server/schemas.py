@@ -17,5 +17,5 @@ class URL(URLBase):
     stats: int
     created_at: _dt.datetime
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
