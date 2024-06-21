@@ -2,6 +2,7 @@ import logging
 import os
 # import aioredis
 from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
@@ -25,6 +26,16 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# check origin domain
+origins = ['*']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
@@ -47,6 +58,11 @@ def shorten_url(
     url: URLBase,
     db: Session = Depends(get_db)
 ):
+    if url.url == "":
+        raise HTTPException(
+            status_code=400,
+            detail="URL is required",
+        )
     return create_short_url(url=url, db=db)
 
 
@@ -63,7 +79,7 @@ def redirect_url(
         short_url=short_key,
     )
     if item is None:
-        return HTTPException(
+        raise HTTPException(
             status_code=404,
             detail="URL not found",
         )
@@ -85,7 +101,7 @@ def get_stats(
         short_url=short_key,
     )
     if item is None:
-        return HTTPException(
+        raise HTTPException(
             status_code=404,
             detail="URL not found",
         )
