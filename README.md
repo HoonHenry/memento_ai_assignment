@@ -15,13 +15,13 @@ Docker version: 26.1.4
 - 참고: 해당 프로젝트는 과제 제출용이므로 환경변수 관련 정보가 노출되어 있습니다. `./config/**/.env` 참고
 
 1. Docker Desktop 설치 ([링크](https://www.docker.com/products/docker-desktop/))
-  - OS에 맞는 프로그램 설치
-  - 설치 안내 메시지에 따라 설치
-  - 설치 완료 확인
-    ```sh
-    # Check the version of Docker Desktop
-    docker version
-    ```
+    - OS에 맞는 프로그램 설치
+    - 설치 안내 메시지에 따라 설치
+    - 설치 완료 확인
+      ```sh
+      # Check the version of Docker Desktop
+      docker version
+      ```
  
 2. Source code 다운로드
    ```sh
