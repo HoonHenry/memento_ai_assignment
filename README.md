@@ -2,6 +2,7 @@
 
 ### 개요
 백엔드 직군 지원자: 송동훈
+
 이메일: dreampath88@gmail.com
 
 python version: 3.11
@@ -9,6 +10,16 @@ python version: 3.11
 Docker version: 26.1.4
 
 기타 라이브러리 버전은 `./config/server/requirements.txt` 참고
+
+### 프로젝트 설명
+
+본 프로젝트는 `description.md`를 바탕으로 만들어진 프로젝트입니다. 데이터베이스로는 PostgreSQL를 선택했고
+선정 이유는 회원관리를 감안하여 선택했습니다. 관계형 데이터베이스를 사용함으로써 유저가 어떤 url에 대한 단축 url을
+부여받았는지 확인하기 용이하고 얼마나 자주 조회를 했는지 확인하기 쉬울 것이라고
+판단했다.
+기본 요구사항을 포함하여 보너스 기능까지 구현했으며 단축 url 생성 라이브러리로는 `tsidpy`를 사용했다.
+`tsidpy`를 사용한 이유는 timestamp를 기준으로 random bit를 사용함으로써 보안성을 높일 수 있고
+중복 가능성 최소화할 것으로 판단했다.
 
 ### 작동 방법
 
