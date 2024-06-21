@@ -10,6 +10,7 @@ log = logging.getLogger(__name__)
 client = TestClient(app)
 
 
+
 def test_read_root():
     response = client.get("/")
     assert response.status_code == 200
@@ -58,7 +59,13 @@ def test_shorten_url_with_expiration_time():
     assert "short_url" in response.json()
     assert "valid_by" in response.json()
     assert response.json()["url"] == "https://www.naver.com"
-    assert response.json()['valid_by'] == due
+    assert _dt.datetime.strptime(
+        response.json()['valid_by'],
+        "%Y-%m-%dT%H:%M:%S.%f"
+    ) == _dt.datetime.strptime(
+        due,
+        "%Y-%m-%d %H:%M:%S.%f"
+    )
 
 
 def test_redirect_url():
