@@ -1,6 +1,4 @@
 import logging
-import os
-# import aioredis
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -17,12 +15,6 @@ from .services import (
 
 log = logging.getLogger(__name__)
 Base.metadata.create_all(bind=engine)
-
-# rd = aioredis.from_url(
-#     f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
-#     decode_responses=True
-# )
-# log.info(rd)
 
 app = FastAPI()
 
